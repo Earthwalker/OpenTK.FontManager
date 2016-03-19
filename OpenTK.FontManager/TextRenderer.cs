@@ -12,7 +12,6 @@ namespace OpenTK.FontManager
     using System.Drawing.Drawing2D;
     using System.Drawing.Text;
     using System.Runtime.InteropServices;
-    using Epic.Vectors;
     using OpenTK.Graphics;
     using OpenTK.Graphics.OpenGL;
 
@@ -48,14 +47,14 @@ namespace OpenTK.FontManager
         /// <exception cref="InvalidOperationException">
         /// No GraphicsContext is current on the calling thread.
         /// </exception>
-        public TextRenderer(Vector2<int> size)
+        public TextRenderer(Vector2 size)
         {
             Contract.Requires(size.X * size.Y > 0);
 
             if (GraphicsContext.CurrentContext == null)
                 throw new InvalidOperationException("No GraphicsContext is current on the calling thread.");
 
-            bmp = new Bitmap(size.X, size.Y, System.Drawing.Imaging.PixelFormat.Format32bppArgb); // Format32bppArgb);
+            bmp = new Bitmap((int)size.X, (int)size.Y, System.Drawing.Imaging.PixelFormat.Format32bppArgb); // Format32bppArgb);
             gfx = Graphics.FromImage(bmp);
             gfx.SmoothingMode = SmoothingMode.None;
             gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
@@ -64,7 +63,7 @@ namespace OpenTK.FontManager
             GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, size.X, size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)size.X, (int)size.Y, 0, PixelFormat.Rgba, PixelType.UnsignedByte, IntPtr.Zero);
         }
 
         /// <summary>

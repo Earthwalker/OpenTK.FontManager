@@ -30,22 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bcl.Community.Extensions, Version=0.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Bcl.Community.Extensions.0.0.6-alpha\lib\net45\Bcl.Community.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Epic.Numbers, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Epic.Numbers.1.0.6-alpha\lib\net45\Epic.Numbers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Epic.Vectors, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Epic.Vectors.1.0.4-alpha\lib\net45\Epic.Vectors.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Monad, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\csharp-monad.0.0.3\lib\Monad.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
