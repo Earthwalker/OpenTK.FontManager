@@ -175,7 +175,7 @@ namespace OpenTK.FontManager
         /// </summary>
         /// <param name="text">The <see cref="System.String"/> to draw.</param>
         /// <param name="font">The <see cref="System.Drawing.Font"/> that will be used.</param>
-        /// <param name="brush">The <see cref="System.Drawing.Brush"/> that will be used.</param>
+        /// <param name="color">The <see cref="Color"/> that will be used.</param>
         /// <param name="point">
         /// The location of the text on the backing store, in 2d pixel coordinates. The origin (0,
         /// 0) lies at the top-left corner of the backing store.
@@ -183,16 +183,17 @@ namespace OpenTK.FontManager
         /// <param name="postprocessForeground">
         /// Determine whether to post-process the foreground color.
         /// </param>
-        public void DrawString(string text, Font font, Brush brush, PointF point, bool postprocessForeground)
+        public void DrawString(string text, Font font, Color color, PointF point, bool postprocessForeground)
         {
-            gfx.DrawString(text, font, brush, point);
+            using (var brush = new SolidBrush(color))
+                gfx.DrawString(text, font, brush, point);
 
             // Update the region, tat contains changes. Determines the
             var size = gfx.MeasureString(text, font);
             dirtyRegion = Rectangle.Round(RectangleF.Union(dirtyRegion, new RectangleF(point, size)));
 
-            if (postprocessForeground && brush is SolidBrush)
-                PostprocessForeground(point, size, (brush as SolidBrush).Color);
+            if (postprocessForeground)
+                PostprocessForeground(point, size, color);
         }
 
         /// <summary>
