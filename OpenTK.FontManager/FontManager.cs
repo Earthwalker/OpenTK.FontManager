@@ -83,8 +83,10 @@ namespace OpenTK.FontManager
             // if that failed, try loading it from a file
             if (font.Name != name)
             {
-                if (LoadFontFromFile(name, size) == null)
-                    return font;
+                var fileFont = LoadFontFromFile(name, size);
+
+                if (fileFont != null)
+                    return fileFont;
             }
 
             // add the new font to our collection
@@ -116,8 +118,10 @@ namespace OpenTK.FontManager
             // if that failed, try loading it from a file
             if (font.Name != family.Name)
             {
-                if (LoadFontFromFile(family.Name, size) == null)
-                    return font;
+                var fileFont = LoadFontFromFile(family.Name, size);
+
+                if (fileFont != null)
+                    return fileFont;
             }
 
             // add the new font to our collection
