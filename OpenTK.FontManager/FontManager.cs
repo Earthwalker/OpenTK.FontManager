@@ -54,7 +54,7 @@ namespace OpenTK.FontManager
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(size >= 0);
 
-            var font = fonts.Find(f => f.Name == name && (size == 0 || (int)f.Size == size));
+            var font = fonts.Find(f => string.Compare(f.Name, name, StringComparison.OrdinalIgnoreCase) == 0 && (size == 0 || (int)f.Size == size));
 
             // check if the font has been registered
             return font ?? LoadFont(name, size == 0 ? 12 : size);
@@ -72,7 +72,7 @@ namespace OpenTK.FontManager
             Contract.Requires(size >= 0);
 
             // check if the font exists
-            var font = fonts.Find(f => f.Name == name && (int)f.Size == size);
+            var font = fonts.Find(f => string.Compare(f.Name, name, StringComparison.OrdinalIgnoreCase) == 0 && (int)f.Size == size);
 
             if (font != null)
                 return font;
@@ -105,7 +105,7 @@ namespace OpenTK.FontManager
             Contract.Requires(size >= 0);
 
             // check if the font exists
-            var font = fonts.Find(f => f.Name == family.Name && (int)f.Size == size);
+            var font = fonts.Find(f => string.Compare(f.Name, family.Name, StringComparison.OrdinalIgnoreCase) == 0 && (int)f.Size == size);
 
             if (font != null)
                 return font;
@@ -138,19 +138,19 @@ namespace OpenTK.FontManager
             Contract.Requires(size >= 0);
 
             // check if the font exists
-            var font = fonts.Find(f => f.Name == filename && (int)f.Size == size);
+            var font = fonts.Find(f => string.Compare(f.Name, filename, StringComparison.OrdinalIgnoreCase) == 0 && (int)f.Size == size);
 
             if (font != null)
                 return font;
 
             // check if we've already loaded the font family
-            var family = fontCollection.Families.FirstOrDefault(f => f.Name.ToUpper() == filename.ToUpper());
+            var family = fontCollection.Families.FirstOrDefault(f => string.Compare(f.Name, filename, StringComparison.OrdinalIgnoreCase) == 0);
 
             if (family == null)
                 fontCollection.AddFontFile(Directory + $@"\{filename}.ttf");
 
             // ensure it loaded successfully
-            family = fontCollection.Families.FirstOrDefault(f => f.Name.ToUpper() == filename.ToUpper());
+            family = fontCollection.Families.FirstOrDefault(f => string.Compare(f.Name, filename, StringComparison.OrdinalIgnoreCase) == 0);
 
             if (family == null)
                 return null;
