@@ -16,17 +16,17 @@ namespace OpenTK.FontManager
     /// <summary>
     /// Manages the fonts.
     /// </summary>
-    public class FontManager : IDisposable
+    public static class FontManager
     {
         /// <summary>
         /// The collection of font families.
         /// </summary>
-        private readonly PrivateFontCollection fontCollection = new PrivateFontCollection();
+        private static readonly PrivateFontCollection fontCollection = new PrivateFontCollection();
 
         /// <summary>
         /// The loaded fonts.
         /// </summary>
-        private readonly List<Font> fonts = new List<Font>();
+        private static readonly List<Font> fonts = new List<Font>();
 
         /// <summary>
         /// Gets or sets the font directory.
@@ -35,12 +35,12 @@ namespace OpenTK.FontManager
         public static string Directory { get; set; } = Environment.CurrentDirectory + "\\Fonts\\";
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting
+        /// unmanaged resources.
         /// </summary>
-        public void Dispose()
+        public static void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            fontCollection.Dispose();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace OpenTK.FontManager
         /// <param name="name">The name.</param>
         /// <param name="size">The size.</param>
         /// <returns>The matching <see cref="Font"/>.</returns>
-        public Font GetFont(string name, int size = 0)
+        public static Font GetFont(string name, int size = 0)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(size >= 0);
@@ -66,7 +66,7 @@ namespace OpenTK.FontManager
         /// <param name="name">The name.</param>
         /// <param name="size">The size.</param>
         /// <returns>The loaded <see cref="Font"/>.</returns>
-        public Font LoadFont(string name, int size)
+        public static Font LoadFont(string name, int size)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
             Contract.Requires(size >= 0);
@@ -101,7 +101,7 @@ namespace OpenTK.FontManager
         /// <param name="family">The family.</param>
         /// <param name="size">The size.</param>
         /// <returns>The loaded <see cref="Font"/>.</returns>
-        public Font LoadFont(FontFamily family, int size)
+        public static Font LoadFont(FontFamily family, int size)
         {
             Contract.Requires(family != null);
             Contract.Requires(size >= 0);
@@ -136,7 +136,7 @@ namespace OpenTK.FontManager
         /// <param name="filename">The filename.</param>
         /// <param name="size">The size.</param>
         /// <returns>The loaded <see cref="Font"/>.</returns>
-        public Font LoadFontFromFile(string filename, int size)
+        public static Font LoadFontFromFile(string filename, int size)
         {
             Contract.Requires(!string.IsNullOrEmpty(filename));
             Contract.Requires(size >= 0);
@@ -160,19 +160,6 @@ namespace OpenTK.FontManager
                 return null;
 
             return LoadFont(family, size);
-        }
-
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources.
-        /// </summary>
-        /// <param name="managed">
-        /// <c>true</c> to release both managed and unmanaged resources; <c>false</c> to release
-        /// only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool managed)
-        {
-            if (managed)
-                fontCollection.Dispose();
         }
     }
 }
